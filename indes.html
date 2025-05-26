@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Graphic Designer Portfolio</title>
+<style>
+  /* Reset & base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+    color: #222;
+    scroll-behavior: smooth;
+  }
+  a {
+    color: #dd4a48;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover {
+    color: #a8322e;
+    text-decoration: underline;
+  }
+  .container {
+    max-width: 960px;
+    margin: auto;
+    padding: 20px;
+  }
+  header {
+    background: #dd4a48;
+    color: white;
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 3px 8px rgba(221,74,72,.5);
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  nav .logo {
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+  }
+  nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav ul li {
+    font-weight: 600;
+  }
+  nav ul li a {
+    padding: 6px 12px;
+    border-radius: 4px;
+  }
+  nav ul li a.active,
+  nav ul li a:hover {
+    background: white;
+    color: #dd4a48;
+  }
+
+  /* Hero/About Section */
+  #about {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 30px;
+    margin-top: 40px;
+  }
+  #about img#profile-pic {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #dd4a48;
+    box-shadow: 0 6px 20px rgba(221,74,72,0.4);
+  }
+  #about .intro {
+    flex: 1;
+    min-width: 280px;
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+  #about .name {
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: #a8322e;
+    margin-bottom: 8px;
+  }
+
+  /* Skills Section */
+  #skills {
+    margin-top: 60px;
+  }
+  #skills h2 {
+    color: #dd4a48;
+    border-left: 6px solid #dd4a48;
+    padding-left: 8px;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .skill {
+    background: #fce4e3;
+    color: #a8322e;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(221,74,72,0.2);
+    user-select: none;
+  }
+
+  /* Projects Section */
+  #projects {
+    margin-top: 60px;
+  }
+  #projects h2 {
+    color: #dd4a48;
+    border-left: 6px solid #dd4a48;
+    padding-left: 8px;
+    margin-bottom: 30px;
+    font-weight: 700;
+  }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 20px;
+  }
+  .project-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    position: relative;
+    cursor: pointer;
+  }
+  .project-card:hover {
+    transform: scale(1.05);
+  }
+  .project-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+  }
+  .project-card .remove-project {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: rgba(221,74,72,0.8);
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+    z-index: 2;
+  }
+  .project-card .remove-project:hover {
+    opacity: 1;
+  }
+
+  /* Contact Section */
+  #contact {
+    margin-top: 60px;
+    background: white;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(221,74,72,0.15);
+    white-space: pre-wrap;
+  }
+  #contact h2 {
+    color: #dd4a48;
+    border-left: 6px solid #dd4a48;
+    padding-left: 8px;
+    margin-bottom: 24px;
+  }
+  .contact-info a {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+    word-break: break-word;
+  }
+
+  /* Admin Panel */
+  #admin-panel {
+    display: none;
+    background: white;
+    padding: 25px 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(75,75,75,0.15);
+    margin-top: 40px;
+  }
+  #admin-panel h2 {
+    color: #555;
+    border-left: 6px solid #aa4a48;
+    padding-left: 8px;
+    margin-bottom: 20px;
+  }
+  #admin-panel label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    margin-top: 15px;
+  }
+  #admin-panel input[type="file"],
+  #admin-panel textarea,
+  #admin-panel input[type="text"] {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    width: 100%;
+    font-family: inherit;
+    resize: vertical;
+  }
+  #admin-panel textarea {
+    min-height: 80px;
+  }
+  #admin-panel button, 
+  #admin-panel .btn {
+    margin-top: 12px;
+    background: #dd4a48;
+    border: none;
+    color: white;
+    font-weight: 700;
+    padding: 12px 28px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  #admin-panel button:hover, 
+  #admin-panel .btn:hover {
+    background: #a8322e;
+  }
+  #admin-login-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #dd4a48;
+    border: none;
+    color: white;
+    font-weight: 700;
+    padding: 14px 24px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(221,74,72,0.7);
+    transition: background 0.3s ease;
+    z-index: 1001;
+  }
+  #admin-login-btn:hover {
+    background: #a8322e;
+  }
+  .list-editable {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .skill-item {
+    background: #fce4e3;
+    color: #a8322e;
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    user-select: none;
+  }
+  .skill-item button {
+    background: transparent;
+    border: none;
+    color: #a8322e;
+    font-weight: 700;
+    font-size: 18px;
+    margin-left: 6px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+  }
+  .skill-item button:hover {
+    color: #dd4a48;
+  }
+
+  /* Modal Styles */
+  #image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1500;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+  }
+  #image-modal .modal-content {
+    margin: 5% auto;
+    display: block;
+    max-width: 90%;
+    max-height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+  }
+  #image-modal .modal-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    user-select: none;
+  }
+  #image-modal .modal-close:hover {
+    color: #dd4a48;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    #about {
+      flex-direction: column;
+      text-align: center;
+    }
+    #about .intro {
+      max-width: 100%;
+    }
+    nav ul {
+      gap: 12px;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <nav class="container" aria-label="Primary navigation">
+    <div class="logo" tabindex="0" id="site-logo">GraphicDesigner</div>
+    <ul>
+      <li><a href="#about" class="active">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="container" tabindex="0">
+  <section id="about" aria-label="About section">
+    <img id="profile-pic" src="" alt="Profile Picture" />
+    <div class="intro">
+      <div class="name" id="name-display">Your Name</div>
+      <div id="about-text">
+        Hi, I'm a passionate Graphic Designer who creates eye-catching visuals and designs for brands and products. Skilled in Adobe Photoshop, Illustrator, branding, and digital design.
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" aria-label="Skills section">
+    <h2>Skills</h2>
+    <div class="skills-list" id="skills-list" tabindex="0" aria-label="List of skills">
+      <!-- Skill tags here -->
+    </div>
+  </section>
+
+  <section id="projects" aria-label="Projects section">
+    <h2>Projects</h2>
+    <div class="projects-grid" id="projects-grid" aria-live="polite" aria-atomic="true" tabindex="0">
+      <!-- Project cards inserted here -->
+    </div>
+  </section>
+
+  <section id="contact" aria-label="Contact section" tabindex="0">
+    <h2>Contact</h2>
+    <div class="contact-info" id="contact-info" style="white-space: pre-wrap;">
+      <a href="mailto:designer.email@example.com">designer.email@example.com</a>
+      <a href="tel:+1234567890">+1 (234) 567 890</a>
+      <a href="https://linkedin.com/in/graphicdesigner" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://instagram.com/graphicdesigner" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </section>
+
+  <section id="admin-panel" aria-label="Admin panel" tabindex="0">
+    <h2>Admin Panel</h2>
+    <label for="nameInput">Name</label>
+    <input type="text" id="nameInput" />
+
+    <label for="profilePicInput">Change Profile Picture (JPG only)</label>
+    <input type="file" id="profilePicInput" accept="image/jpeg" />
+
+    <label for="aboutTextarea">Edit About Text</label>
+    <textarea id="aboutTextarea" rows="6" aria-describedby="aboutHelp"></textarea>
+    <small id="aboutHelp">Use plain text.</small>
+    <button class="btn" id="saveAboutBtn">Save About Text</button>
+
+    <label>Edit Skills</label>
+    <div>
+      <input type="text" id="newSkillInput" placeholder="Add new skill" />
+      <button class="btn" id="addSkillBtn">Add Skill</button>
+    </div>
+    <div class="list-editable" id="skills-edit-list" aria-label="Skills editable list">
+      <!-- Skills with remove buttons -->
+    </div>
+
+    <label for="projectUploadInput">Upload Project Image (JPG only)</label>
+    <input type="file" id="projectUploadInput" accept="image/jpeg" />
+    <small>Uploaded projects appear below. Click "×" to remove.</small>
+    <div class="projects-grid" id="projects-edit-grid" aria-label="Admin project images">
+      <!-- Editable project images with remove -->
+    </div>
+
+    <label for="contactEmail">Contact Email</label>
+    <input type="text" id="contactEmail" />
+    <label for="contactPhone">Contact Phone</label>
+    <input type="text" id="contactPhone" />
+    <label for="contactLinkedIn">LinkedIn URL</label>
+    <input type="text" id="contactLinkedIn" />
+    <label for="contactInstagram">Instagram URL</label>
+    <input type="text" id="contactInstagram" />
+    <button class="btn" id="saveContactBtn">Save Contact Info</button>
+
+    <button id="logoutBtn">Logout Admin</button>
+  </section>
+</main>
+
+<button id="admin-login-btn" aria-label="Admin login button">Admin Login</button>
+
+<!-- Modal for large project image -->
+<div id="image-modal" role="dialog" aria-modal="true" aria-label="Project image modal">
+  <span class="modal-close" role="button" aria-label="Close image modal" tabindex="0">&times;</span>
+  <img class="modal-content" id="modal-img" alt="Expanded project image" />
+</div>
+
+<script>
+  // Password for admin access
+  const ADMIN_PASSWORD = 'mypassword123'; // Change this to your desired secure password
+
+  // DOM Elements
+  const adminPanel = document.getElementById('admin-panel');
+  const adminLoginBtn = document.getElementById('admin-login-btn');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  const profilePicInput = document.getElementById('profilePicInput');
+  const projectUploadInput = document.getElementById('projectUploadInput');
+
+  const profilePic = document.getElementById('profile-pic');
+  const aboutTextDisplay = document.getElementById('about-text');
+  const aboutTextarea = document.getElementById('aboutTextarea');
+
+  const nameDisplay = document.getElementById('name-display');
+  const nameInput = document.getElementById('nameInput');
+
+  const skillsList = document.getElementById('skills-list');
+  const skillsEditList = document.getElementById('skills-edit-list');
+  const newSkillInput = document.getElementById('newSkillInput');
+  const addSkillBtn = document.getElementById('addSkillBtn');
+
+  const projectsGrid = document.getElementById('projects-grid');
+  const projectsEditGrid = document.getElementById('projects-edit-grid');
+
+  const contactInfoDiv = document.getElementById('contact-info');
+  const contactEmailInput = document.getElementById('contactEmail');
+  const contactPhoneInput = document.getElementById('contactPhone');
+  const contactLinkedInInput = document.getElementById('contactLinkedIn');
+  const contactInstagramInput = document.getElementById('contactInstagram');
+  const saveContactBtn = document.getElementById('saveContactBtn');
+
+  // Modal Elements
+  const imageModal = document.getElementById('image-modal');
+  const modalImg = document.getElementById('modal-img');
+  const modalCloseBtn = imageModal.querySelector('.modal-close');
+
+  // Check if admin is logged in (using sessionStorage)
+  function isAdmin() {
+    return sessionStorage.getItem('adminLoggedIn') === 'true';
+  }
+
+  // Show or hide admin panel + change button visibility
+  function updateAdminUI() {
+    if (isAdmin()) {
+      adminPanel.style.display = 'block';
+      adminLoginBtn.style.display = 'none';
+    } else {
+      adminPanel.style.display = 'none';
+      adminLoginBtn.style.display = 'block';
+    }
+  }
+
+  // Admin login prompt
+  adminLoginBtn.addEventListener('click', () => {
+    const pwd = prompt('Enter admin password:');
+    if (pwd === ADMIN_PASSWORD) {
+      sessionStorage.setItem('adminLoggedIn', 'true');
+      updateAdminUI();
+      loadAllDataIntoAdmin();
+      alert('Admin login successful!');
+    } else {
+      alert('Incorrect password.');
+    }
+  });
+
+  // Logout admin
+  logoutBtn.addEventListener('click', () => {
+    sessionStorage.removeItem('adminLoggedIn');
+    updateAdminUI();
+    alert('Logged out of admin panel.');
+  });
+
+  // Load profile picture from localStorage or default
+  function loadProfilePicture() {
+    const storedPic = localStorage.getItem('profilePicture');
+    if (storedPic) {
+      profilePic.src = storedPic;
+    } else {
+      profilePic.src = 'https://via.placeholder.com/220x220.png?text=Profile+Picture';
+    }
+  }
+
+  // Load about text (default included)
+  function loadAboutText() {
+    const about = localStorage.getItem('aboutText');
+    if (about) {
+      aboutTextDisplay.textContent = about;
+    } else {
+      aboutTextDisplay.textContent = "Hi, I'm a passionate Graphic Designer who creates eye-catching visuals and designs for brands and products. Skilled in Adobe Photoshop, Illustrator, branding, and digital design.";
+    }
+  }
+
+  // Load name or default
+  function loadName() {
+    const storedName = localStorage.getItem('name');
+    if (storedName) {
+      nameDisplay.textContent = storedName;
+    } else {
+      nameDisplay.textContent = 'Your Name';
+    }
+  }
+
+  // Load skills or default list
+  function loadSkills() {
+    let skills = JSON.parse(localStorage.getItem('skills'));
+    if (!skills || !Array.isArray(skills) || skills.length === 0) {
+      skills = [
+        'Brand Identity',
+        'Illustration',
+        'Typography',
+        'Logo Design',
+        'Photoshop',
+        'Illustrator',
+        'UI & UX Design',
+        'Print Design'
+      ];
+    }
+    skillsList.innerHTML = '';
+    skillsEditList.innerHTML = '';
+    skills.forEach((skill, index) => {
+      // For display
+      const span = document.createElement('span');
+      span.className = 'skill';
+      span.textContent = skill;
+      skillsList.appendChild(span);
+
+      // For edit list with remove button
+      const skillDiv = document.createElement('div');
+      skillDiv.className = 'skill-item';
+      skillDiv.textContent = skill;
+
+      const removeBtn = document.createElement('button');
+      removeBtn.setAttribute('aria-label', 'Remove skill ' + skill);
+      removeBtn.textContent = '×';
+      removeBtn.onclick = () => {
+        skills.splice(index, 1);
+        localStorage.setItem('skills', JSON.stringify(skills));
+        loadSkills();
+      };
+      skillDiv.appendChild(removeBtn);
+      skillsEditList.appendChild(skillDiv);
+    });
+  }
+
+  // Load projects from localStorage and display
+  function loadProjects() {
+    let projects = JSON.parse(localStorage.getItem('projects'));
+    if (!projects || !Array.isArray(projects)) projects = [];
+    // Display on user side
+    projectsGrid.innerHTML = '';
+    if (projects.length === 0) {
+      projectsGrid.innerHTML = '<p tabindex="0" style="color:#777; text-align:center;">No projects uploaded yet.</p>';
+    } else {
+      projects.forEach((project, index) => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.tabIndex = 0;
+        card.setAttribute('aria-label', `Project image ${index + 1}`);
+        const img = document.createElement('img');
+        img.src = project;
+        img.alt = 'Project image';
+        card.appendChild(img);
+        // Clicking the project opens modal
+        card.onclick = () => openModal(project);
+        projectsGrid.appendChild(card);
+      });
+    }
+    // Display in admin edit section with remove buttons
+    projectsEditGrid.innerHTML = '';
+    projects.forEach((project, index) => {
+      const card = document.createElement('div');
+      card.className = 'project-card';
+      card.tabIndex = 0;
+      card.setAttribute('aria-label', `Project image ${index + 1} admin edit`);
+      const img = document.createElement('img');
+      img.src = project;
+      img.alt = 'Project image';
+      card.appendChild(img);
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'remove-project';
+      removeBtn.title = 'Remove project';
+      removeBtn.innerHTML = '&times;';
+      removeBtn.onclick = (e) => {
+        e.stopPropagation(); // prevent modal from opening
+        projects.splice(index, 1);
+        localStorage.setItem('projects', JSON.stringify(projects));
+        loadProjects();
+      };
+      card.appendChild(removeBtn);
+      projectsEditGrid.appendChild(card);
+    });
+  }
+
+  // Load contact info from localStorage or default
+  function loadContactInfo() {
+    const contact = JSON.parse(localStorage.getItem('contactInfo')) || {
+      email: 'designer.email@example.com',
+      phone: '+1 (234) 567 890',
+      linkedin: 'https://linkedin.com/in/graphicdesigner',
+      instagram: 'https://instagram.com/graphicdesigner'
+    };
+    // User display HTML with links
+    contactInfoDiv.innerHTML = '';
+    if(contact.email) contactInfoDiv.innerHTML += `<a href="mailto:${contact.email}">${contact.email}</a>`;
+    if(contact.phone) contactInfoDiv.innerHTML += `<a href="tel:${contact.phone}">${contact.phone}</a>`;
+    if(contact.linkedin) contactInfoDiv.innerHTML += `<a href="${contact.linkedin}" target="_blank" rel="noopener">LinkedIn</a>`;
+    if(contact.instagram) contactInfoDiv.innerHTML += `<a href="${contact.instagram}" target="_blank" rel="noopener">Instagram</a>`;
+
+    // Admin inputs
+    contactEmailInput.value = contact.email || '';
+    contactPhoneInput.value = contact.phone || '';
+    contactLinkedInInput.value = contact.linkedin || '';
+    contactInstagramInput.value = contact.instagram || '';
+  }
+
+  // Save about text from admin textarea
+  document.getElementById('saveAboutBtn').addEventListener('click', () => {
+    const text = aboutTextarea.value.trim();
+    localStorage.setItem('aboutText', text);
+    loadAboutText();
+    alert('About text saved.');
+  });
+
+  // Save name from admin input
+  nameInput.addEventListener('change', () => {
+    const nameVal = nameInput.value.trim() || 'Your Name';
+    localStorage.setItem('name', nameVal);
+    loadName();
+  });
+
+  // Add new skill button
+  addSkillBtn.addEventListener('click', () => {
+    const newSkill = newSkillInput.value.trim();
+    if (!newSkill) {
+      alert('Please enter a skill.');
+      return;
+    }
+    let skills = JSON.parse(localStorage.getItem('skills')) || [];
+    if (skills.includes(newSkill)) {
+      alert('Skill already exists.');
+      return;
+    }
+    skills.push(newSkill);
+    localStorage.setItem('skills', JSON.stringify(skills));
+    loadSkills();
+    newSkillInput.value = '';
+  });
+
+  // Handle profile picture upload
+  profilePicInput.addEventListener('change', () => {
+    const file = profilePicInput.files[0];
+    if (!file) return;
+    if (file.type !== 'image/jpeg') {
+      alert('Only JPG images are allowed for profile picture.');
+      profilePicInput.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      localStorage.setItem('profilePicture', e.target.result);
+      loadProfilePicture();
+      alert('Profile picture updated successfully!');
+      profilePicInput.value = '';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Handle project image upload
+  projectUploadInput.addEventListener('change', () => {
+    const file = projectUploadInput.files[0];
+    if (!file) return;
+    if (file.type !== 'image/jpeg') {
+      alert('Only JPG images are allowed for projects.');
+      projectUploadInput.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      let projects = JSON.parse(localStorage.getItem('projects')) || [];
+      projects.push(e.target.result);
+      localStorage.setItem('projects', JSON.stringify(projects));
+      loadProjects();
+      alert('Project image uploaded successfully!');
+      projectUploadInput.value = '';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Save contact info
+  saveContactBtn.addEventListener('click', () => {
+    const email = contactEmailInput.value.trim();
+    const phone = contactPhoneInput.value.trim();
+    const linkedin = contactLinkedInInput.value.trim();
+    const instagram = contactInstagramInput.value.trim();
+    const contact = {email, phone, linkedin, instagram};
+    localStorage.setItem('contactInfo', JSON.stringify(contact));
+    loadContactInfo();
+    alert('Contact info saved.');
+  });
+
+  // Highlight nav links based on scroll position
+  const navLinks = document.querySelectorAll('nav ul li a');
+  const sections = document.querySelectorAll('main section[id]');
+  window.addEventListener('scroll', () => {
+    let scrollPos = window.scrollY + 120;
+    sections.forEach(section => {
+      if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if(link.getAttribute('href') === '#' + section.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  });
+
+  // Load all data & populate admin inputs
+  function loadAllDataIntoAdmin() {
+    aboutTextarea.value = localStorage.getItem('aboutText') || "Hi, I'm a passionate Graphic Designer who creates eye-catching visuals and designs for brands and products. Skilled in Adobe Photoshop, Illustrator, branding, and digital design.";
+    nameInput.value = localStorage.getItem('name') || '';
+    loadSkills();
+    loadProjects();
+    loadContactInfo();
+    loadName();
+  }
+
+  // Modal functionality to open large image
+  function openModal(src) {
+    modalImg.src = src;
+    imageModal.style.display = 'block';
+    modalCloseBtn.focus();
+  }
+  // Close modal
+  function closeModal() {
+    imageModal.style.display = 'none';
+    modalImg.src = '';
+  }
+
+  // Click on close button
+  modalCloseBtn.addEventListener('click', closeModal);
+  // Click outside image closes modal
+  imageModal.addEventListener('click', (e) => {
+    if (e.target === imageModal) closeModal();
+  });
+  // Keyboard controls for modal accessibility
+  document.addEventListener('keydown', (e) => {
+    if (imageModal.style.display === 'block') {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        closeModal();
+      }
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        modalCloseBtn.focus();
+      }
+    }
+  });
+
+  // Initialization
+  loadProfilePicture();
+  loadAboutText();
+  loadSkills();
+  loadProjects();
+  loadContactInfo();
+  loadName();
+  updateAdminUI();
+</script>
+</body>
+</html>
+
